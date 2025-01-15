@@ -11,6 +11,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+// Import the data directly from the JSON file
+import data from "../_data/db.json";
+
 interface Receipe {
   id: string;
   title: string;
@@ -20,17 +23,15 @@ interface Receipe {
   vegan: boolean;
 }
 
+// Simulate a delay function
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default async function Home() {
-  async function getreceipe(): Promise<Receipe[]> {
-    const result = await fetch("http://localhost:4000/recipes");
-    
-    await new Promise<void>((resolve) => {
-      setTimeout(resolve,3000)
-    })
-    
-    return result.json();
-  }
-  const recepies = await getreceipe();
+  // Simulate data fetching with a delay
+  await delay(3000); // 3-second delay
+  const recepies: Receipe[] = data.recipes;
 
   return (
     <main>
@@ -39,7 +40,7 @@ export default async function Home() {
           <Card key={recepie.id} className="flex flex-col justify-between">
             <CardHeader className="flex-row gap-4 items-center">
               <Avatar>
-                <AvatarImage src={`/img/${recepie.image}`} alt="receipe img" />
+                <AvatarImage src={`/img/${recepie.image}`} alt="recipe img" />
                 <AvatarFallback>{recepie.title.slice(0, 2)}</AvatarFallback>
               </Avatar>
               <div>
@@ -51,7 +52,7 @@ export default async function Home() {
               <p>{recepie.description}</p>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button>View Receipe</Button>
+              <Button>View Recipe</Button>
               {recepie.vegan && <Badge variant="secondary">Vegan!</Badge>}
             </CardFooter>
           </Card>
