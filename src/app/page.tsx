@@ -24,7 +24,7 @@ export default async function Home() {
   async function getreceipe(): Promise<Receipe[]> {
     const result = await fetch("http://localhost:4000/recipes");
     
-    await new Promise<void>((resolve, reject) => {
+    await new Promise<void>((resolve) => {
       setTimeout(resolve,3000)
     })
     
